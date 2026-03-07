@@ -40,8 +40,8 @@ export default function Contact() {
     {
       icon: Mail,
       label: 'E-posta',
-      value: settings?.contact_email || 'gokboru43official@gmail.com',
-      href: `mailto:${settings?.contact_email || 'gokboru43official@gmail.com'}`,
+      value: settings?.contact_email || 'iletisim@beyboru.com',
+      href: `mailto:${settings?.contact_email || 'iletisim@beyboru.com'}`,
     },
     ...(settings?.contact_phone ? [{
       icon: Phone,
