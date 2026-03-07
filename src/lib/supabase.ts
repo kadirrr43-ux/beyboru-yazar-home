@@ -142,11 +142,25 @@ export const storageApi = {
     const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
     const filePath = `${path}/${fileName}`;
 
+    // Önce Storage bucket'ının varlığını kontrol et
+    const { data: buckets } = await supabase.storage.listBuckets();
+    const imagesBucket = buckets?.find(b => b.name === 'images');
+
+    if (!imagesBucket) {
+      throw new Error('Storage bucket "images" bulunamadı. Lütfen Supabase Dashboard > Storage > New Bucket > "images" (Public) oluşturun.');
+    }
+
     const { error: uploadError } = await supabase.storage
       .from('images')
-      .upload(filePath, file);
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
 
-    if (uploadError) throw uploadError;
+    if (uploadError) {
+      console.error('Storage upload error:', uploadError);
+      throw new Error(`Yükleme hatası: ${uploadError.message}`);
+    }
 
     const { data } = supabase.storage.from('images').getPublicUrl(filePath);
     return data.publicUrl;
@@ -157,4 +171,14 @@ export const storageApi = {
     if (!path) return;
     await supabase.storage.from('images').remove([path]);
   },
+
+  // Base64 fallback - Storage çalışmazsa kullanılır
+  async fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
 };

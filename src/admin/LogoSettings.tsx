@@ -38,18 +38,34 @@ export default function LogoSettings() {
       };
       reader.readAsDataURL(file);
 
-      // Supabase'e yükle
-      const url = await storageApi.uploadImage(file, 'logos');
+      let url: string;
+
+      try {
+        // Önce Supabase Storage'a yükle
+        url = await storageApi.uploadImage(file, 'logos');
+        toast.success('Logo başarıyla yüklendi!');
+      } catch (storageError: any) {
+        // Storage hatası - base64 fallback kullan
+        console.warn('Storage hatası, base64 fallback kullanılıyor:', storageError);
+        
+        if (file.size > 500 * 1024) {
+          toast.error('Dosya çok büyük (max 500KB). Lütfen daha küçük bir dosya seçin.');
+          setUploading(false);
+          return;
+        }
+        
+        url = await storageApi.fileToBase64(file);
+        toast.success('Logo base64 olarak kaydedildi (Storage yerine)');
+      }
       
       // Ayarları güncelle
       if (settings) {
         const updated = { ...settings, logo_url: url };
         setSettings(updated);
-        toast.success('Logo başarıyla yüklendi!');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload error:', error);
-      toast.error('Logo yüklenirken bir hata oluştu');
+      toast.error(`Logo yüklenirken hata: ${error.message || 'Bilinmeyen hata'}`);
     } finally {
       setUploading(false);
     }
@@ -186,12 +202,19 @@ export default function LogoSettings() {
               Logo Yükleme Kuralları
             </h4>
             <ul className="text-sm space-y-1" style={{ color: 'var(--beyboru-text-muted)' }}>
-              <li>• Dosya boyutu en fazla 2MB olmalıdır</li>
+              <li>• Dosya boyutu en fazla 2MB olmalıdır (base64 için 500KB)</li>
               <li>• PNG, JPG veya SVG formatında olmalıdır</li>
               <li>• Kare veya yatay format önerilir</li>
               <li>• Şeffaf arka plan (PNG) önerilir</li>
-              <li>• Logo yüklenmezse varsayılan bozkurt logosu kullanılır</li>
+              <li>• Storage hatası olursa otomatik base64 olarak kaydedilir</li>
             </ul>
+            <div className="mt-3 p-3 rounded-lg text-xs" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
+              <strong style={{ color: 'var(--beyboru-text)' }}>Storage Kurulumu:</strong>
+              <p className="mt-1" style={{ color: 'var(--beyboru-text-muted)' }}>
+                Supabase Dashboard → Storage → New Bucket → "images" adında Public bucket oluşturun.
+                Policies bölümünden INSERT ve SELECT izinlerini ekleyin.
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>

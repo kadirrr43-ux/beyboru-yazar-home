@@ -53,11 +53,34 @@ VITE_SITE_URL=http://localhost:5173
 
 ### 4. Supabase Yapılandırması
 
+#### 4.1 Veritabanı Tablolarını Oluştur
+
 1. [Supabase](https://supabase.com) hesabı oluştur
 2. Yeni proje oluştur
 3. SQL Editor'ü aç
 4. `supabase_schema.sql` dosyasını çalıştır
-5. Storage > Buckets > `images` bucket'ını public yap
+
+#### 4.2 Storage Bucket Yapılandırması (ÖNEMLİ!)
+
+Logo yükleme için Storage bucket'ını manuel olarak oluşturmanız gerekir:
+
+1. **Supabase Dashboard** → **Storage** → **New Bucket**
+2. **Bucket Name:** `images`
+3. **Public bucket:** ✅ İşaretli olsun
+4. **Create bucket** butonuna tıklayın
+
+**Storage Policies Ekleme:**
+
+Bucket oluşturduktan sonra policies ekleyin:
+
+1. `images` bucket'ına tıklayın
+2. **Policies** sekmesine geçin
+3. **New Policy** → **For Select (Get)** → **Allow read access**
+4. **New Policy** → **For Insert (Create)** → **Allow insert access**
+5. **New Policy** → **For Update** → **Allow update access**
+6. **New Policy** → **For Delete** → **Allow delete access**
+
+**Hâlâ hata alırsanız:** Logo base64 olarak veritabanına kaydedilecektir (fallback mekanizması).
 
 ### 5. Admin Hesabı Oluştur
 
