@@ -30,6 +30,11 @@ import BookForm from '@/admin/BookForm';
 import Settings from '@/admin/Settings';
 import ThemeSettings from '@/admin/ThemeSettings';
 import LogoSettings from '@/admin/LogoSettings';
+import CharactersManager from '@/admin/CharactersManager';
+import LocationsManager from '@/admin/LocationsManager';
+import ConceptsManager from '@/admin/ConceptsManager';
+import TimelineManager from '@/admin/TimelineManager';
+import ReviewsManager from '@/admin/ReviewsManager';
 
 // Pages
 function HomePage() {
@@ -106,6 +111,11 @@ function App() {
           <Route path="kitaplar" element={<BooksList />} />
           <Route path="kitaplar/yeni" element={<BookForm />} />
           <Route path="kitaplar/:id" element={<BookForm />} />
+          <Route path="karakterler" element={<CharactersManager />} />
+          <Route path="lokasyonlar" element={<LocationsManager />} />
+          <Route path="kavramlar" element={<ConceptsManager />} />
+          <Route path="zaman-cizelgesi" element={<TimelineManager />} />
+          <Route path="yorumlar" element={<ReviewsManager />} />
           <Route path="logo" element={<LogoSettings />} />
           <Route path="ayarlar" element={<Settings />} />
           <Route path="tema" element={<ThemeSettings />} />

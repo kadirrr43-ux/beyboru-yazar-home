@@ -1,7 +1,102 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Book, SiteSettings, Theme } from '@/types';
-import { THEMES } from '@/types';
+import type { Book, SiteSettings } from '@/types';
+
+// Theme Type
+export interface Theme {
+  id: string;
+  name: string;
+  colors: {
+    background: string;
+    surface: string;
+    surfaceLight: string;
+    accent: string;
+    accentLight: string;
+    gold: string;
+    goldLight: string;
+    text: string;
+    textMuted: string;
+    textSubtle: string;
+    border: string;
+    glow: string;
+  };
+}
+
+// Theme Constants
+export const THEMES: Theme[] = [
+  {
+    id: 'dark',
+    name: 'Karanlık',
+    colors: {
+      background: '#0a0a0c',
+      surface: '#141418',
+      surfaceLight: '#1c1c22',
+      accent: '#8B3A3A',
+      accentLight: '#A85A5A',
+      gold: '#D4AF37',
+      goldLight: '#E8C96A',
+      text: '#f5f5f5',
+      textMuted: '#a0a0a0',
+      textSubtle: '#6a6a6a',
+      border: 'rgba(212, 175, 55, 0.15)',
+      glow: 'rgba(212, 175, 55, 0.3)',
+    },
+  },
+  {
+    id: 'light',
+    name: 'Aydınlık',
+    colors: {
+      background: '#f8f6f3',
+      surface: '#ffffff',
+      surfaceLight: '#f0eeeb',
+      accent: '#8B3A3A',
+      accentLight: '#A85A5A',
+      gold: '#B8941F',
+      goldLight: '#D4AF37',
+      text: '#1a1a1a',
+      textMuted: '#5a5a5a',
+      textSubtle: '#9a9a9a',
+      border: 'rgba(0, 0, 0, 0.1)',
+      glow: 'rgba(184, 148, 31, 0.2)',
+    },
+  },
+  {
+    id: 'gold',
+    name: 'Altın',
+    colors: {
+      background: '#1a1612',
+      surface: '#242019',
+      surfaceLight: '#2e2820',
+      accent: '#8B6914',
+      accentLight: '#A67C1A',
+      gold: '#FFD700',
+      goldLight: '#FFE55C',
+      text: '#FFF8E7',
+      textMuted: '#D4C4A8',
+      textSubtle: '#8B7D6B',
+      border: 'rgba(255, 215, 0, 0.2)',
+      glow: 'rgba(255, 215, 0, 0.4)',
+    },
+  },
+  {
+    id: 'blue',
+    name: 'Mavi',
+    colors: {
+      background: '#0c1220',
+      surface: '#141b2d',
+      surfaceLight: '#1e2740',
+      accent: '#2E4A7A',
+      accentLight: '#4A6FA5',
+      gold: '#C9A227',
+      goldLight: '#E0B83A',
+      text: '#e8eef5',
+      textMuted: '#9ab0c9',
+      textSubtle: '#5a7090',
+      border: 'rgba(201, 162, 39, 0.15)',
+      glow: 'rgba(201, 162, 39, 0.3)',
+    },
+  },
+];
 
 // Auth Store
 interface AuthState {

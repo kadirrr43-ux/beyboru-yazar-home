@@ -10,7 +10,13 @@ import {
   ChevronRight,
   Home,
   Palette,
-  Image
+  Image,
+  Users,
+  MapPin,
+  Sparkles,
+  Clock,
+  MessageSquare,
+  Globe
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
@@ -19,6 +25,18 @@ import { useAuthStore } from '@/store';
 const menuItems = [
   { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/admin/kitaplar', label: 'Kitaplar', icon: BookOpen },
+  { 
+    path: '/admin/evren', 
+    label: 'Beybörü Evreni', 
+    icon: Globe,
+    children: [
+      { path: '/admin/karakterler', label: 'Karakterler', icon: Users },
+      { path: '/admin/lokasyonlar', label: 'Lokasyonlar', icon: MapPin },
+      { path: '/admin/kavramlar', label: 'Kavramlar', icon: Sparkles },
+      { path: '/admin/zaman-cizelgesi', label: 'Zaman Çizelgesi', icon: Clock },
+    ]
+  },
+  { path: '/admin/yorumlar', label: 'Yorumlar', icon: MessageSquare },
   { path: '/admin/logo', label: 'Logo', icon: Image },
   { path: '/admin/ayarlar', label: 'Site Ayarları', icon: Settings },
   { path: '/admin/tema', label: 'Tema', icon: Palette },
@@ -88,34 +106,67 @@ export default function AdminLayout() {
         </div>
 
         {/* Menu */}
-        <nav className="p-4 space-y-1">
+        <nav className="p-4 space-y-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path || 
               (item.path !== '/admin' && location.pathname.startsWith(item.path));
+            const hasChildren = item.children && item.children.length > 0;
+            const isChildActive = hasChildren && item.children?.some(child => location.pathname === child.path);
             
             return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={`flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 ${
-                  isActive 
-                    ? 'font-medium' 
-                    : 'hover:bg-white/5'
-                }`}
-                style={{
-                  backgroundColor: isActive ? 'var(--beyboru-accent)' : 'transparent',
-                  color: isActive ? 'var(--beyboru-text)' : 'var(--beyboru-text-muted)',
-                }}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {sidebarOpen && (
-                  <>
-                    <span className="ml-3 flex-1">{item.label}</span>
-                    {isActive && <ChevronRight className="w-4 h-4" />}
-                  </>
+              <div key={item.path}>
+                <NavLink
+                  to={item.path}
+                  className={`flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 ${
+                    isActive || isChildActive
+                      ? 'font-medium' 
+                      : 'hover:bg-white/5'
+                  }`}
+                  style={{
+                    backgroundColor: isActive || isChildActive ? 'var(--beyboru-accent)' : 'transparent',
+                    color: isActive || isChildActive ? 'var(--beyboru-text)' : 'var(--beyboru-text-muted)',
+                  }}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  {sidebarOpen && (
+                    <>
+                      <span className="ml-3 flex-1">{item.label}</span>
+                      {(isActive || isChildActive) && <ChevronRight className="w-4 h-4" />}
+                    </>
+                  )}
+                </NavLink>
+                
+                {/* Submenu */}
+                {hasChildren && sidebarOpen && (
+                  <div className="ml-4 mt-1 space-y-1">
+                    {item.children?.map((child) => {
+                      const ChildIcon = child.icon;
+                      const isChildPathActive = location.pathname === child.path;
+                      
+                      return (
+                        <NavLink
+                          key={child.path}
+                          to={child.path}
+                          className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 ${
+                            isChildPathActive 
+                              ? 'font-medium' 
+                              : 'hover:bg-white/5'
+                          }`}
+                          style={{
+                            backgroundColor: isChildPathActive ? 'var(--beyboru-accent)' : 'transparent',
+                            color: isChildPathActive ? 'var(--beyboru-text)' : 'var(--beyboru-text-muted)',
+                            opacity: 0.85,
+                          }}
+                        >
+                          <ChildIcon className="w-4 h-4 flex-shrink-0" />
+                          <span className="ml-3 text-sm">{child.label}</span>
+                        </NavLink>
+                      );
+                    })}
+                  </div>
                 )}
-              </NavLink>
+              </div>
             );
           })}
         </nav>

@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Check, Palette, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useThemeStore, applyTheme } from '@/store';
-import { THEMES } from '@/types';
+import { useThemeStore, applyTheme, THEMES } from '@/store';
 
 export default function ThemeSettings() {
   const { currentTheme, setTheme } = useThemeStore();
@@ -81,7 +80,7 @@ export default function ThemeSettings() {
                   className="font-playfair text-lg"
                   style={{ color: theme.colors.text }}
                 >
-                  {theme.label}
+                  {theme.name}
                 </CardTitle>
                 {selectedTheme === theme.id && (
                   <div 
@@ -199,7 +198,7 @@ export default function ThemeSettings() {
       <Card style={{ backgroundColor: 'var(--beyboru-surface)', border: '1px solid var(--beyboru-border)' }}>
         <CardHeader>
           <CardTitle className="font-playfair text-lg" style={{ color: 'var(--beyboru-text)' }}>
-            Mevcut Tema: {currentTheme.label}
+            Mevcut Tema: {currentTheme.name}
           </CardTitle>
         </CardHeader>
         <CardContent>

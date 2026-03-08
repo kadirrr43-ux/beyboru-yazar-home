@@ -11,6 +11,7 @@ import { useSettingsStore } from '@/store';
 import type { SiteSettings } from '@/types';
 
 const defaultSettings: SiteSettings = {
+  id: '1',
   site_title: 'Beybörü Yazar Evi',
   site_description: 'Türk edebiyatının yeni sesi',
   hero_title: 'Beybörü Yazar Evi',
@@ -27,6 +28,11 @@ const defaultSettings: SiteSettings = {
   theme: 'dark',
   primary_color: '#8B3A3A',
   accent_color: '#D4AF37',
+  show_visitor_count: true,
+  show_book_count: true,
+  show_hero_count: true,
+  show_language_count: true,
+  updated_at: new Date().toISOString(),
 };
 
 export default function Settings() {
