@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useSettingsStore } from '@/store';
 import SEO from '@/components/SEO';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 // EmailJS Configuration
 // KURULUM: https://www.emailjs.com/ adresinden ücretsiz hesap oluşturun
@@ -34,8 +34,6 @@ export default function Contact() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // EmailJS'i başlat
-    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,7 +54,8 @@ export default function Contact() {
       await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
         EMAILJS_CONFIG.TEMPLATE_ID,
-        templateParams
+        templateParams,
+        EMAILJS_CONFIG.PUBLIC_KEY
       );
 
       setSent(true);
