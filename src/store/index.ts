@@ -117,3 +117,31 @@ export const useUIStore = create<UIState>((set) => ({
   toast: null,
   setToast: (toast) => set({ toast }),
 }));
+
+// Stats Store - Dinamik istatistikler
+interface StatsState {
+  dailyVisitors: number;
+  lastResetDate: string;
+  incrementVisitor: () => void;
+  resetIfNeeded: () => void;
+}
+
+export const useStatsStore = create<StatsState>()(
+  persist(
+    (set, get) => ({
+      dailyVisitors: 0,
+      lastResetDate: new Date().toDateString(),
+      incrementVisitor: () => {
+        get().resetIfNeeded();
+        set((state) => ({ dailyVisitors: state.dailyVisitors + 1 }));
+      },
+      resetIfNeeded: () => {
+        const today = new Date().toDateString();
+        if (get().lastResetDate !== today) {
+          set({ dailyVisitors: 1, lastResetDate: today });
+        }
+      },
+    }),
+    { name: 'beyboru-stats' }
+  )
+);

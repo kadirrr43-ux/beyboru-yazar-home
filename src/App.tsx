@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'sonner';
 import { useThemeStore, applyTheme } from '@/store';
+import SEO from '@/components/SEO';
 
 // Site Components
 import Navbar from '@/site/Navbar';
@@ -13,6 +15,11 @@ import Translator from '@/site/Translator';
 import About from '@/site/About';
 import Contact from '@/site/Contact';
 import Footer from '@/site/Footer';
+import Universe from '@/site/Universe';
+import UniverseCharacters from '@/site/UniverseCharacters';
+import UniverseConcepts from '@/site/UniverseConcepts';
+import UniverseLocations from '@/site/UniverseLocations';
+import UniverseTimeline from '@/site/UniverseTimeline';
 
 // Admin Components
 import Login from '@/admin/Login';
@@ -62,7 +69,9 @@ function App() {
   }, [currentTheme]);
 
   return (
+    <HelmetProvider>
     <Router>
+      <SEO />
       <Toaster 
         position="top-right"
         toastOptions={{
@@ -82,6 +91,13 @@ function App() {
         <Route path="/ceviri" element={<SiteLayout><Translator /></SiteLayout>} />
         <Route path="/hakkimda" element={<SiteLayout><About /></SiteLayout>} />
         <Route path="/iletisim" element={<SiteLayout><Contact /></SiteLayout>} />
+        
+        {/* Universe Routes */}
+        <Route path="/evren" element={<SiteLayout><Universe /></SiteLayout>} />
+        <Route path="/evren/karakterler" element={<SiteLayout><UniverseCharacters /></SiteLayout>} />
+        <Route path="/evren/kavramlar" element={<SiteLayout><UniverseConcepts /></SiteLayout>} />
+        <Route path="/evren/lokasyonlar" element={<SiteLayout><UniverseLocations /></SiteLayout>} />
+        <Route path="/evren/zaman-cizelgesi" element={<SiteLayout><UniverseTimeline /></SiteLayout>} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<Login />} />
@@ -99,6 +115,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
+    </HelmetProvider>
   );
 }
 

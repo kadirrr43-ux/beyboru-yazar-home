@@ -1,11 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Mail, Phone, Send, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Mail, Send, Twitter, Instagram, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useSettingsStore } from '@/store';
+import SEO from '@/components/SEO';
+import emailjs from 'emailjs-com';
+
+// EmailJS Configuration
+// KURULUM: https://www.emailjs.com/ adresinden ücretsiz hesap oluşturun
+// 1. Email Service ekleyin (Gmail seçin)
+// 2. Email Template oluşturun
+// 3. Public Key alın
+const EMAILJS_CONFIG = {
+  SERVICE_ID: 'service_2ag9iuj', // EmailJS Service ID'niz
+  TEMPLATE_ID: 'template_d5cibw9', // EmailJS Template ID'niz
+  PUBLIC_KEY: 'I-ucc0cAhaesi1rwA', // EmailJS Public Key'iniz
+};
 
 export default function Contact() {
   const { settings } = useSettingsStore();
@@ -17,38 +30,54 @@ export default function Contact() {
   });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // EmailJS'i başlat
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    
-    // Simulate sending
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setSending(false);
-    setSent(true);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    
-    setTimeout(() => setSent(false), 5000);
+    setError(null);
+
+    try {
+      // EmailJS ile gönder
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: 'gokboru43official@gmail.com',
+      };
+
+      await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams
+      );
+
+      setSent(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      
+      setTimeout(() => setSent(false), 5000);
+    } catch (err) {
+      console.error('Email gönderme hatası:', err);
+      setError('Mesaj gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const contactInfo = [
     {
       icon: Mail,
       label: 'E-posta',
-      value: settings?.contact_email || 'gokboru43official@gmail.com',
-      href: `mailto:${settings?.contact_email || 'gokboru43official@gmail.com'}`,
+      value: 'gokboru43official@gmail.com',
+      href: 'mailto:gokboru43official@gmail.com',
     },
-    ...(settings?.contact_phone ? [{
-      icon: Phone,
-      label: 'Telefon',
-      value: settings.contact_phone,
-      href: `tel:${settings.contact_phone}`,
-    }] : []),
   ];
 
   const socialLinks = [
@@ -70,6 +99,13 @@ export default function Contact() {
   ];
 
   return (
+    <>
+      <SEO
+        title="İletişim | Beybörü Yazar Evi"
+        description="Beybörü Yazar Evi ile iletişime geçin. Sorularınız, önerileriniz ve işbirliği talepleriniz için bize ulaşabilirsiniz."
+        keywords="Beybörü iletişim, yazar iletişim, edebiyat işbirliği"
+        url="https://beyborudestanlari.com.tr/iletisim"
+      />
     <div className="min-h-screen" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
       {/* Hero */}
       <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
@@ -138,6 +174,15 @@ export default function Contact() {
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-6">
+                      {error && (
+                        <div 
+                          className="p-4 rounded-lg"
+                          style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)' }}
+                        >
+                          <p style={{ color: '#ef4444' }}>{error}</p>
+                        </div>
+                      )}
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <Label style={{ color: 'var(--beyboru-text)' }}>Adınız</Label>
@@ -288,5 +333,6 @@ export default function Contact() {
         </div>
       </div>
     </div>
+    </>
   );
 }

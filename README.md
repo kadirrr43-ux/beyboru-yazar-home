@@ -203,6 +203,106 @@ src/
 └── App.tsx             # Ana uygulama
 ```
 
+## SEO Optimizasyonu
+
+### Google Search Console Kurulumu
+
+1. [Google Search Console](https://search.google.com/search-console) açın
+2. "Add Property" → `beyborudestanlari.com.tr` ekleyin
+3. Doğrulama yöntemi: **DNS** veya **HTML tag**
+4. Sitemap URL: `https://beyborudestanlari.com.tr/sitemap.xml`
+
+### Otomatik SEO Özellikleri
+
+- ✅ **Sitemap.xml** - Tüm sayfalar otomatik indeksleniyor
+- ✅ **robots.txt** - Arama motorlarına yönlendirme
+- ✅ **Meta etiketleri** - Dinamik başlık ve açıklamalar
+- ✅ **Open Graph** - Sosyal medya paylaşımları
+- ✅ **Schema.org** - Kitaplar için yapısal veri
+- ✅ **Canonical URL** - Yinelenen içerik önleme
+
+### SEO Bileşeni Kullanımı
+
+```tsx
+import SEO from '@/components/SEO';
+
+// Sayfada kullanım
+<SEO
+  title="Sayfa Başlığı"
+  description="Sayfa açıklaması"
+  keywords="anahtar, kelimeler"
+  image="https://site.com/gorsel.jpg"
+  url="https://site.com/sayfa"
+  type="website" // veya "book", "article"
+/>
+```
+
+### Kitap Sayfası SEO (Schema.org)
+
+```tsx
+<SEO
+  title="Ergenekod | Beybörü"
+  description="Kitap açıklaması"
+  type="book"
+  bookData={{
+    name: "Ergenekod",
+    isbn: "9786258662054",
+    price: 119.00,
+    pageCount: 84,
+    publishDate: "2026-02-10",
+    image: "https://..."
+  }}
+/>
+```
+
+## Email (İletişim Formu) Kurulumu
+
+Ziyaretçilerin size email gönderebilmesi için **EmailJS** kullanıyoruz:
+
+### 1. EmailJS Hesabı Oluştur
+1. [emailjs.com](https://www.emailjs.com/) adresine git
+2. Ücretsiz hesap oluştur
+
+### 2. Email Service Ekle
+1. **Email Services** → **Add New Service**
+2. **Gmail** seç
+3. Gmail hesabını bağla (`gokboru43official@gmail.com`)
+4. Service ID'yi not al (örn: `service_beyboru`)
+
+### 3. Email Template Oluştur
+1. **Email Templates** → **Create New Template**
+2. Template adı: `template_contact`
+3. Template içeriği:
+
+```html
+Yeni Mesaj!
+
+Gönderen: {{from_name}}
+Email: {{from_email}}
+Konu: {{subject}}
+
+Mesaj:
+{{message}}
+```
+
+### 4. Public Key Al
+1. **Account** → **General**
+2. Public Key'i not al
+
+### 5. Contact.tsx Güncelle
+`src/site/Contact.tsx` dosyasını aç ve şu satırları güncelle:
+
+```typescript
+const EMAILJS_CONFIG = {
+  SERVICE_ID: 'service_beyboru', // Senin Service ID'n
+  TEMPLATE_ID: 'template_contact', // Senin Template ID'n
+  PUBLIC_KEY: 'XXXXXXXXXXXXXXX', // Senin Public Key'in
+};
+```
+
+### 6. Test Et
+İletişim formunu doldur ve gönder. Email'in geldiğini kontrol et.
+
 ## Katkıda Bulunma
 
 1. Fork yap

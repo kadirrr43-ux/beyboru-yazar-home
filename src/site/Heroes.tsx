@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import SEO from '@/components/SEO';
 
 interface Hero {
   id: string;
@@ -391,6 +392,13 @@ export default function Heroes() {
   });
 
   return (
+    <>
+      <SEO
+        title="Türk Kahramanları | Mete Han'dan Fatih'e Tarihimizin Efsaneleri"
+        description="Türk tarihinin 18 büyük kahramanı: Mete Han, Fatih Sultan Mehmet, Bilge Kağan ve daha fazlası. Savaşçılar, devlet adamları, bilim insanları."
+        keywords="Türk kahramanları, Mete Han, Fatih Sultan Mehmet, Bilge Kağan, Türk tarihi, Osmanlı padişahları"
+        url="https://beyborudestanlari.com.tr/kahramanlar"
+      />
     <div className="min-h-screen" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
       {/* Hero */}
       <div className="pt-28 pb-12 px-4 sm:px-6 lg:px-8">
@@ -629,5 +637,6 @@ export default function Heroes() {
         </DialogContent>
       </Dialog>
     </div>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { translate, speak, type Language, sampleTexts, languageInfo } from '@/lib/translator';
 import { toast } from 'sonner';
+import SEO from '@/components/SEO';
 
 interface TranslationHistory {
   id: string;
@@ -100,6 +101,13 @@ export default function Translator() {
   const getLanguageDirection = (lang: Language) => languageInfo[lang].direction;
 
   return (
+    <>
+      <SEO
+        title="Osmanlıca Göktürkçe Çeviri | Ücretsiz Online Çeviri Aracı"
+        description="Türkçe metinleri Osmanlıca ve Göktürkçe'ye ücretsiz çevirin. Sesli okuma, sayı çevirisi ve geçmiş kaydı özellikleriyle kadim dilleri keşfedin."
+        keywords="Osmanlıca çeviri, Göktürkçe çeviri, Türkçe Osmanlıca, online çeviri, kadim Türkçe"
+        url="https://beyborudestanlari.com.tr/ceviri"
+      />
     <div className="min-h-screen" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
       {/* Hero */}
       <div className="pt-28 pb-8 px-4 sm:px-6 lg:px-8">
@@ -460,5 +468,6 @@ export default function Translator() {
         </div>
       </div>
     </div>
+    </>
   );
 }

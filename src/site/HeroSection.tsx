@@ -1,13 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, Languages, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, Languages, Sparkles, Scroll } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useSettingsStore } from '@/store';
+import { useSettingsStore, useStatsStore, useBooksStore } from '@/store';
 import WolfLogo from './WolfLogo';
 
 export default function HeroSection() {
   const { settings } = useSettingsStore();
+  const { dailyVisitors, incrementVisitor } = useStatsStore();
+  const { books } = useBooksStore();
   const heroRef = useRef<HTMLDivElement>(null);
+
+  // Ziyaretçi sayısını artır
+  useEffect(() => {
+    incrementVisitor();
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -23,6 +30,15 @@ export default function HeroSection() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  // Dinamik istatistikler
+  const publishedBooks = books.filter(b => b.status === 'published').length || 3;
+  const heroStats = [
+    { value: `${publishedBooks}+`, label: 'Yayınlanan Kitap' },
+    { value: '18+', label: 'Türk Kahramanı' },
+    { value: '3', label: 'Kadim Dil' },
+    { value: dailyVisitors > 999 ? '999+' : dailyVisitors.toString(), label: 'Bugünkü Ziyaretçi' },
+  ];
 
   return (
     <section
@@ -99,9 +115,9 @@ export default function HeroSection() {
             border: '1px solid var(--beyboru-gold)',
           }}
         >
-          <BookOpen className="w-4 h-4" style={{ color: 'var(--beyboru-gold)' }} />
+          <Sparkles className="w-4 h-4" style={{ color: 'var(--beyboru-gold)' }} />
           <span className="text-sm font-medium" style={{ color: 'var(--beyboru-gold)' }}>
-            Yazar & Hikaye Anlatıcısı
+            Kelimelerin İzinde, Hikayelerin Peşinde
           </span>
         </div>
 
@@ -124,7 +140,7 @@ export default function HeroSection() {
             animationDelay: '0.1s',
           }}
         >
-          {settings?.hero_subtitle || 'Kelimelerin izinde, hikayelerin peşinde...'}
+          {settings?.hero_subtitle || 'Türk edebiyatının yeni sesi. Tarih, mitoloji ve özgün hikayeler.'}
         </p>
 
         {/* CTA Buttons */}
@@ -137,18 +153,19 @@ export default function HeroSection() {
               size="lg"
               className="group px-8 py-6 text-lg beyboru-button"
             >
+              <BookOpen className="w-5 h-5 mr-2" />
               Kitapları Keşfet
               <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
-          <Link to="/kahramanlar">
+          <Link to="/evren">
             <Button 
               size="lg"
               variant="outline"
               className="px-8 py-6 text-lg beyboru-button-outline"
             >
-              <Users className="w-5 h-5 mr-2" />
-              Kahramanlar
+              <Scroll className="w-5 h-5 mr-2" />
+              Beybörü Evreni
             </Button>
           </Link>
           <Link to="/ceviri">
@@ -158,7 +175,7 @@ export default function HeroSection() {
               className="px-8 py-6 text-lg beyboru-button-outline"
             >
               <Languages className="w-5 h-5 mr-2" />
-              Çeviri
+              Kadim Çevirici
             </Button>
           </Link>
         </div>
@@ -168,12 +185,7 @@ export default function HeroSection() {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto animate-fade-in"
           style={{ animationDelay: '0.4s' }}
         >
-          {[
-            { value: '3+', label: 'Yayınlanan Kitap' },
-            { value: '18+', label: 'Türk Kahramanı' },
-            { value: '3', label: 'Kadim Dil' },
-            { value: '1000+', label: 'Okuyucu' },
-          ].map((stat, index) => (
+          {heroStats.map((stat, index) => (
             <div key={index} className="text-center">
               <p 
                 className="text-2xl sm:text-3xl font-playfair font-bold"

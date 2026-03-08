@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BookOpen, Pen, Heart, Sparkles } from 'lucide-react';
 import { useSettingsStore } from '@/store';
+import SEO from '@/components/SEO';
 
 export default function About() {
   const { settings } = useSettingsStore();
@@ -10,6 +11,13 @@ export default function About() {
   }, []);
 
   return (
+    <>
+      <SEO
+        title="Hakkımda | Beybörü Yazar Evi"
+        description="Beybörü, Türk edebiyatına yeni bir soluk getiren yazar. Tarih, mitoloji ve modern edebiyatın kesişiminde özgün hikayeler."
+        keywords="Beybörü, yazar hakkında, Türk edebiyatı, tarihi roman yazarı"
+        url="https://beyborudestanlari.com.tr/hakkimda"
+      />
     <div className="min-h-screen" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
       {/* Hero */}
       <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
@@ -124,5 +132,6 @@ export default function About() {
         </div>
       </div>
     </div>
+    </>
   );
 }

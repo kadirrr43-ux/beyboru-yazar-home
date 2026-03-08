@@ -1,16 +1,71 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Share2, BookOpen, Calendar, Hash, FileText } from 'lucide-react';
+import { 
+  ArrowLeft, ExternalLink, Share2, BookOpen, Calendar, Hash, FileText,
+  Users, Star, MessageSquare, ChevronDown, ChevronUp, Quote
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { booksApi } from '@/lib/supabase';
+import SEO from '@/components/SEO';
 import type { Book } from '@/types';
+
+// Kitap karakterleri verisi
+const bookCharacters: Record<string, Array<{name: string, role: string, desc: string}>> = {
+  'ergenekod': [
+    { name: 'Dr. Aydın Yılmaz', role: 'Baş Karakter', desc: 'Arkeolog ve Ergenekon sırlarının izini süren bilim insanı' },
+    { name: 'Leyla Kaya', role: 'Yan Karakter', desc: 'Teknoloji uzmanı ve Aydın\'ın güvenilir yardımcısı' },
+    { name: 'Gölge Ajanı', role: 'Anti-Kahraman', desc: 'Ergenekon sırlarını ele geçirmeye çalışan gizli örgüt üyesi' },
+  ],
+  'kudus': [
+    { name: 'Umut', role: 'Baş Karakter', desc: 'Kudüs\'ün yıkıntılarında umudu arayan genç' },
+    { name: 'Fatma Ana', role: 'Yan Karakter', desc: 'Kudüs\'ün bilge kadını, direnişin manevi lideri' },
+  ],
+  'zincirlerden-gunese': [
+    { name: 'Kara Güneş Lideri', role: 'Baş Karakter', desc: 'Afrika\'da özgürlük mücadelesi veren gizli örgütün lideri' },
+  ],
+};
+
+// İlk bölüm örnekleri
+const firstChapters: Record<string, string> = {
+  'ergenekod': `İstanbul'un sisli bir kasım sabahında, Dr. Aydın Yılmaz Üniversite kütüphanesinin bodrum katındaki tozlu raflar arasında kaybolmuştu. Elindeki eski harita, dedesinden kalma bir mirasın parçasıydı. Haritanın üzerindeki işaretler, yüzyıllardır çözülememiş bir şifreyi gizliyordu.
+
+"Ergenekon..." diye mırıldandı Aydın, parmağıyla haritadaki gizemli sembolü takip ederken. "Demir dağların arasından kurtuluşun efsanesi."
+
+Aniden telefonu çaldı. Ekranda bilinmeyen bir numara parlıyordu. Aydın tereddütle açtı.
+
+"Dr. Yılmaz, sizi bekliyoruz. Göktürk tamgalarının sırrını çözmek için vaktiniz daralıyor."`,
+
+  'kudus': `Siren sesleri yine gökyüzünü delip geçti. Umut, enkazların arasından süzülen ışık huzmesine bakarken, elindeki son ekmeği küçük kız kardeşine uzattı.
+
+"Ye sen," dedi kız kardeşi, başını sallayarak. "Ben tokum."
+
+Umut gülümsedi. Yalan söylemeyi henüz öğrenememişti küçük kız. Ama bu yalan, Kudüs'ün taşlarında büyüyen tüm çocukların ortak yalanıydı. Açlıklarını gizlemek için söyledikleri, umudu ayakta tutan bir yalan.
+
+Ezan sesi uzaktan yükseldi. Cuma günüydü ve direnişin en kutsal günü. Umut, babasının mezarının olduğu yöne baktı. Orada, harabelerin arasında, umut filizleniyordu.`,
+
+  'zincirlerden-gunese': `Kara Güneş ilk kez doğduğunda, Afrika'nın toprakları titredi. Yüzyılların zincirleri, bu yeni güneşin ışığıyla çatırdamaya başladı.
+
+Lider, maskesinin arkasından baktı. Binlerce yüz, onu izliyordu. Her yüz, bir hikaye taşıyordu. Her hikaye, kayıp bir anne, öldürülen bir baba, çalınmış bir çocukluk.
+
+"Bugün," dedi Lider, sesi gecenin sessizliğini yarıyordu. "Zincirlerin kırıldığı gün. Bugün, Kara Güneş'in doğduğu gün."
+
+Eller havaya kalktı. Kara Güneş sembolleri, meşalelerin ışığında dans ediyordu. Ve Afrika, ilk kez yüzyıllardır uykuda olan aslan gibi kükremeye başladı.`,
+};
+
+// Örnek yorumlar
+const sampleReviews: Array<{name: string; rating: number; comment: string; date: string}> = [
+  { name: 'Ahmet Y.', rating: 5, comment: 'Muhteşem bir hikaye! Türk mitolojisini bu kadar güçlü işleyen başka bir roman okumadım.', date: '2 hafta önce' },
+  { name: 'Zeynep K.', rating: 5, comment: 'Karakterler çok iyi işlenmiş, okurken kendimi olayların içinde hissettim.', date: '1 ay önce' },
+  { name: 'Mehmet S.', rating: 4, comment: 'Tarih ve kurgu mükemmel harmanlanmış. Devamını merakla bekliyorum.', date: '2 ay önce' },
+];
 
 export default function BookDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [showFullChapter, setShowFullChapter] = useState(false);
 
   useEffect(() => {
     if (slug) {
@@ -23,7 +78,6 @@ export default function BookDetail() {
       const data = await booksApi.getBySlug(slug!);
       if (data) {
         setBook(data);
-        // Increment view count
         await booksApi.incrementView(slug!);
       } else {
         setError(true);
@@ -48,7 +102,6 @@ export default function BookDetail() {
         console.log('Share cancelled');
       }
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href);
     }
   };
@@ -83,7 +136,29 @@ export default function BookDetail() {
     );
   }
 
+  const characters = book ? bookCharacters[book.slug] || [] : [];
+  const firstChapter = book ? firstChapters[book.slug] || '' : '';
+  const reviews = sampleReviews;
+
   return (
+    <>
+      <SEO
+        title={`${book.title}${book.subtitle ? ` - ${book.subtitle}` : ''} | Beybörü`}
+        description={book.seo_description || book.description}
+        keywords={book.seo_keywords?.join(', ') || book.tags?.join(', ')}
+        image={book.cover_image}
+        url={`https://beyborudestanlari.com.tr/kitap/${book.slug}`}
+        type="book"
+        publishedDate={book.publish_date}
+        bookData={{
+          name: book.title,
+          isbn: book.isbn,
+          price: book.price,
+          pageCount: book.page_count,
+          publishDate: book.publish_date,
+          image: book.cover_image,
+        }}
+      />
     <div className="min-h-screen" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
       {/* Header */}
       <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8">
@@ -207,7 +282,7 @@ export default function BookDetail() {
                     style={{ color: 'var(--beyboru-text)' }}
                   >
                     <FileText className="w-5 h-5" style={{ color: 'var(--beyboru-gold)' }} />
-                    Kitap Hakkında
+                    Hikaye Özeti
                   </h3>
                   <div 
                     className="prose prose-invert max-w-none whitespace-pre-line"
@@ -318,8 +393,160 @@ export default function BookDetail() {
               </div>
             </div>
           </div>
+
+          {/* Characters Section */}
+          {characters.length > 0 && (
+            <div className="mt-20">
+              <div className="flex items-center gap-3 mb-8">
+                <Users className="w-6 h-6" style={{ color: 'var(--beyboru-gold)' }} />
+                <h2 
+                  className="font-playfair text-3xl font-bold"
+                  style={{ color: 'var(--beyboru-text)' }}
+                >
+                  Karakterler
+                </h2>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {characters.map((char, i) => (
+                  <Card 
+                    key={i}
+                    style={{ 
+                      backgroundColor: 'var(--beyboru-surface)',
+                      border: '1px solid var(--beyboru-border)',
+                    }}
+                  >
+                    <CardContent className="p-6">
+                      <span 
+                        className="px-2 py-1 rounded text-xs font-medium mb-3 inline-block"
+                        style={{ 
+                          backgroundColor: 'var(--beyboru-gold)20',
+                          color: 'var(--beyboru-gold)',
+                        }}
+                      >
+                        {char.role}
+                      </span>
+                      <h3 
+                        className="font-playfair text-xl font-semibold mb-2"
+                        style={{ color: 'var(--beyboru-text)' }}
+                      >
+                        {char.name}
+                      </h3>
+                      <p style={{ color: 'var(--beyboru-text-muted)' }}>
+                        {char.desc}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* First Chapter Preview */}
+          {firstChapter && (
+            <div className="mt-20">
+              <div className="flex items-center gap-3 mb-8">
+                <BookOpen className="w-6 h-6" style={{ color: 'var(--beyboru-gold)' }} />
+                <h2 
+                  className="font-playfair text-3xl font-bold"
+                  style={{ color: 'var(--beyboru-text)' }}
+                >
+                  İlk Bölümden Bir Alıntı
+                </h2>
+              </div>
+              
+              <Card 
+                style={{ 
+                  backgroundColor: 'var(--beyboru-surface)',
+                  border: '1px solid var(--beyboru-border)',
+                }}
+              >
+                <CardContent className="p-8">
+                  <Quote className="w-8 h-8 mb-4" style={{ color: 'var(--beyboru-gold)' }} />
+                  <div 
+                    className={`prose prose-invert max-w-none whitespace-pre-line transition-all duration-300 ${
+                      showFullChapter ? '' : 'line-clamp-6'
+                    }`}
+                    style={{ color: 'var(--beyboru-text-muted)' }}
+                  >
+                    {firstChapter}
+                  </div>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setShowFullChapter(!showFullChapter)}
+                    className="mt-4"
+                    style={{ color: 'var(--beyboru-gold)' }}
+                  >
+                    {showFullChapter ? (
+                      <>Daha Az Göster <ChevronUp className="w-4 h-4 ml-2" /></>
+                    ) : (
+                      <>Devamını Oku <ChevronDown className="w-4 h-4 ml-2" /></>
+                    )}
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Reviews Section */}
+          <div className="mt-20">
+            <div className="flex items-center gap-3 mb-8">
+              <MessageSquare className="w-6 h-6" style={{ color: 'var(--beyboru-gold)' }} />
+              <h2 
+                className="font-playfair text-3xl font-bold"
+                style={{ color: 'var(--beyboru-text)' }}
+              >
+                Okuyucu Yorumları
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {reviews.map((review, i) => (
+                <Card 
+                  key={i}
+                  style={{ 
+                    backgroundColor: 'var(--beyboru-surface)',
+                    border: '1px solid var(--beyboru-border)',
+                  }}
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-1 mb-3">
+                      {[...Array(5)].map((_, j) => (
+                        <Star 
+                          key={j} 
+                          className={`w-4 h-4 ${j < review.rating ? 'fill-current' : ''}`}
+                          style={{ color: j < review.rating ? 'var(--beyboru-gold)' : 'var(--beyboru-text-subtle)' }}
+                        />
+                      ))}
+                    </div>
+                    <p 
+                      className="mb-4 italic"
+                      style={{ color: 'var(--beyboru-text-muted)' }}
+                    >
+                      "{review.comment}"
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span 
+                        className="font-medium"
+                        style={{ color: 'var(--beyboru-text)' }}
+                      >
+                        {review.name}
+                      </span>
+                      <span 
+                        className="text-sm"
+                        style={{ color: 'var(--beyboru-text-subtle)' }}
+                      >
+                        {review.date}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    </>
   );
 }
