@@ -8,16 +8,20 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useSettingsStore } from '@/store';
 import SEO from '@/components/SEO';
 import emailjs from '@emailjs/browser';
+import { toast } from 'sonner';
 
-// EmailJS Configuration
-// KURULUM: https://www.emailjs.com/ adresinden ücretsiz hesap oluşturun
-// 1. Email Service ekleyin (Gmail seçin)
-// 2. Email Template oluşturun
-// 3. Public Key alın
+// EmailJS Configuration - Doğrudan sabit değerler
 const EMAILJS_CONFIG = {
-  SERVICE_ID: 'service_2ag9iuj', // EmailJS Service ID'niz
-  TEMPLATE_ID: 'template_d5cibw9', // EmailJS Template ID'niz
-  PUBLIC_KEY: 'I-ucc0cAhaesi1rwA', // EmailJS Public Key'iniz
+  SERVICE_ID: 'service_2ag9iuj', // EmailJS Service ID
+  TEMPLATE_ID: 'template_d5cibw9', // EmailJS Template ID
+  PUBLIC_KEY: 'I-ucc0cAhaesi1rwA', // EmailJS Public Key
+};
+
+// EmailJS kurulu mu kontrol et
+const isEmailJSConfigured = () => {
+  return EMAILJS_CONFIG.SERVICE_ID !== '' && 
+         EMAILJS_CONFIG.TEMPLATE_ID !== '' && 
+         EMAILJS_CONFIG.PUBLIC_KEY !== '';
 };
 
 export default function Contact() {
@@ -30,7 +34,6 @@ export default function Contact() {
   });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,33 +41,43 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // EmailJS yapılandırılmış mı kontrol et
+    if (!isEmailJSConfigured()) {
+      toast.error('Email servisi henüz yapılandırılmamış. Lütfen site yöneticisiyle iletişime geçin.');
+      return;
+    }
+
     setSending(true);
-    setError(null);
 
     try {
-      // EmailJS ile gönder
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
         subject: formData.subject,
         message: formData.message,
         to_email: 'gokboru43official@gmail.com',
+        reply_to: formData.email,
       };
 
-      await emailjs.send(
+      const result = await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
         EMAILJS_CONFIG.TEMPLATE_ID,
         templateParams,
         EMAILJS_CONFIG.PUBLIC_KEY
       );
 
-      setSent(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      setTimeout(() => setSent(false), 5000);
-    } catch (err) {
+      if (result.status === 200) {
+        setSent(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        toast.success('Mesajınız başarıyla gönderildi!');
+        setTimeout(() => setSent(false), 5000);
+      } else {
+        throw new Error('Email gönderilemedi');
+      }
+    } catch (err: any) {
       console.error('Email gönderme hatası:', err);
-      setError('Mesaj gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      toast.error(err.text || 'Mesaj gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
     } finally {
       setSending(false);
     }
@@ -173,42 +186,41 @@ export default function Contact() {
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-6">
-                      {error && (
-                        <div 
-                          className="p-4 rounded-lg"
-                          style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)' }}
-                        >
-                          <p style={{ color: '#ef4444' }}>{error}</p>
-                        </div>
-                      )}
-
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <Label style={{ color: 'var(--beyboru-text)' }}>Adınız</Label>
+                          <Label htmlFor="name" style={{ color: 'var(--beyboru-text)' }}>Adınız</Label>
                           <Input
+                            id="name"
+                            name="name"
                             value={formData.name}
                             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                             placeholder="Ahmet Yılmaz"
                             required
+                            autoComplete="name"
                             className="beyboru-input"
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label style={{ color: 'var(--beyboru-text)' }}>E-posta</Label>
+                          <Label htmlFor="email" style={{ color: 'var(--beyboru-text)' }}>E-posta</Label>
                           <Input
+                            id="email"
+                            name="email"
                             type="email"
                             value={formData.email}
                             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                             placeholder="ahmet@example.com"
                             required
+                            autoComplete="email"
                             className="beyboru-input"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <Label style={{ color: 'var(--beyboru-text)' }}>Konu</Label>
+                        <Label htmlFor="subject" style={{ color: 'var(--beyboru-text)' }}>Konu</Label>
                         <Input
+                          id="subject"
+                          name="subject"
                           value={formData.subject}
                           onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
                           placeholder="Mesajınızın konusu..."
@@ -218,8 +230,10 @@ export default function Contact() {
                       </div>
 
                       <div className="space-y-2">
-                        <Label style={{ color: 'var(--beyboru-text)' }}>Mesajınız</Label>
+                        <Label htmlFor="message" style={{ color: 'var(--beyboru-text)' }}>Mesajınız</Label>
                         <Textarea
+                          id="message"
+                          name="message"
                           value={formData.message}
                           onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                           placeholder="Mesajınızı buraya yazın..."
@@ -233,15 +247,16 @@ export default function Contact() {
                         type="submit"
                         disabled={sending}
                         className="w-full beyboru-button"
+                        aria-label={sending ? 'Mesaj gönderiliyor' : 'Mesaj gönder'}
                       >
                         {sending ? (
                           <span className="flex items-center gap-2">
-                            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" aria-hidden="true" />
                             Gönderiliyor...
                           </span>
                         ) : (
                           <span className="flex items-center gap-2">
-                            <Send className="w-4 h-4" />
+                            <Send className="w-4 h-4" aria-hidden="true" />
                             Mesaj Gönder
                           </span>
                         )}
@@ -273,12 +288,13 @@ export default function Contact() {
                           href={item.href}
                           className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-white/5"
                           style={{ backgroundColor: 'var(--beyboru-bg)' }}
+                          aria-label={`${item.label}: ${item.value}`}
                         >
                           <div 
                             className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
                             style={{ backgroundColor: 'var(--beyboru-accent)' }}
                           >
-                            <Icon className="w-5 h-5" style={{ color: 'var(--beyboru-text)' }} />
+                            <Icon className="w-5 h-5" style={{ color: 'var(--beyboru-text)' }} aria-hidden="true" />
                           </div>
                           <div>
                             <p className="text-xs" style={{ color: 'var(--beyboru-text-muted)' }}>
@@ -317,9 +333,10 @@ export default function Contact() {
                             rel="noopener noreferrer"
                             className="w-12 h-12 rounded-lg flex items-center justify-center transition-colors hover:opacity-80"
                             style={{ backgroundColor: 'var(--beyboru-bg)' }}
+                            aria-label={item.label}
                             title={item.label}
                           >
-                            <Icon className="w-5 h-5" style={{ color: 'var(--beyboru-gold)' }} />
+                            <Icon className="w-5 h-5" style={{ color: 'var(--beyboru-gold)' }} aria-hidden="true" />
                           </a>
                         );
                       })}

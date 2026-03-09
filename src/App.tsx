@@ -1,40 +1,49 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'sonner';
 import { useThemeStore, applyTheme } from '@/store';
 import SEO from '@/components/SEO';
 
-// Site Components
+// Site Components - Lazy loaded
 import Navbar from '@/site/Navbar';
 import HeroSection from '@/site/HeroSection';
 import BooksSection from '@/site/BooksSection';
-import BookDetail from '@/site/BookDetail';
-import Heroes from '@/site/Heroes';
-import Translator from '@/site/Translator';
-import About from '@/site/About';
-import Contact from '@/site/Contact';
 import Footer from '@/site/Footer';
-import Universe from '@/site/Universe';
-import UniverseCharacters from '@/site/UniverseCharacters';
-import UniverseConcepts from '@/site/UniverseConcepts';
-import UniverseLocations from '@/site/UniverseLocations';
-import UniverseTimeline from '@/site/UniverseTimeline';
 
-// Admin Components
-import Login from '@/admin/Login';
-import AdminLayout from '@/admin/AdminLayout';
-import Dashboard from '@/admin/Dashboard';
-import BooksList from '@/admin/BooksList';
-import BookForm from '@/admin/BookForm';
-import Settings from '@/admin/Settings';
-import ThemeSettings from '@/admin/ThemeSettings';
-import LogoSettings from '@/admin/LogoSettings';
-import CharactersManager from '@/admin/CharactersManager';
-import LocationsManager from '@/admin/LocationsManager';
-import ConceptsManager from '@/admin/ConceptsManager';
-import TimelineManager from '@/admin/TimelineManager';
-import ReviewsManager from '@/admin/ReviewsManager';
+// Site Components - Lazy loaded
+const BookDetail = lazy(() => import('@/site/BookDetail'));
+const Heroes = lazy(() => import('@/site/Heroes'));
+const Translator = lazy(() => import('@/site/Translator'));
+const About = lazy(() => import('@/site/About'));
+const Contact = lazy(() => import('@/site/Contact'));
+const Universe = lazy(() => import('@/site/Universe'));
+const UniverseCharacters = lazy(() => import('@/site/UniverseCharacters'));
+const UniverseConcepts = lazy(() => import('@/site/UniverseConcepts'));
+const UniverseLocations = lazy(() => import('@/site/UniverseLocations'));
+const UniverseTimeline = lazy(() => import('@/site/UniverseTimeline'));
+
+// Admin Components - Lazy loaded
+const Login = lazy(() => import('@/admin/Login'));
+const AdminLayout = lazy(() => import('@/admin/AdminLayout'));
+const Dashboard = lazy(() => import('@/admin/Dashboard'));
+const BooksList = lazy(() => import('@/admin/BooksList'));
+const BookForm = lazy(() => import('@/admin/BookForm'));
+const Settings = lazy(() => import('@/admin/Settings'));
+const ThemeSettings = lazy(() => import('@/admin/ThemeSettings'));
+const LogoSettings = lazy(() => import('@/admin/LogoSettings'));
+const CharactersManager = lazy(() => import('@/admin/CharactersManager'));
+const LocationsManager = lazy(() => import('@/admin/LocationsManager'));
+const ConceptsManager = lazy(() => import('@/admin/ConceptsManager'));
+const TimelineManager = lazy(() => import('@/admin/TimelineManager'));
+const ReviewsManager = lazy(() => import('@/admin/ReviewsManager'));
+
+// Loading component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
+    <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+  </div>
+);
 
 // Pages
 function HomePage() {
@@ -87,6 +96,7 @@ function App() {
           },
         }}
       />
+      <Suspense fallback={<PageLoader />}>
       <Routes>
         {/* Site Routes */}
         <Route path="/" element={<SiteLayout><HomePage /></SiteLayout>} />
@@ -124,6 +134,7 @@ function App() {
         {/* Redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </Suspense>
     </Router>
     </HelmetProvider>
   );

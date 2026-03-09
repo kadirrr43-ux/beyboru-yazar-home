@@ -87,9 +87,10 @@ export default function Footer() {
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors hover:bg-white/10"
                       style={{ backgroundColor: 'var(--beyboru-bg)' }}
+                      aria-label={item.label}
                       title={item.label}
                     >
-                      <Icon className="w-5 h-5" style={{ color: 'var(--beyboru-gold)' }} />
+                      <Icon className="w-5 h-5" style={{ color: 'var(--beyboru-gold)' }} aria-hidden="true" />
                     </a>
                   );
                 })}

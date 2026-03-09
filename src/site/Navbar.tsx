@@ -95,11 +95,14 @@ export default function Navbar() {
             size="icon"
             className="lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Menüyü kapat' : 'Menüyü aç'}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             {isOpen ? (
-              <X className="w-6 h-6" style={{ color: 'var(--beyboru-text)' }} />
+              <X className="w-6 h-6" style={{ color: 'var(--beyboru-text)' }} aria-hidden="true" />
             ) : (
-              <Menu className="w-6 h-6" style={{ color: 'var(--beyboru-text)' }} />
+              <Menu className="w-6 h-6" style={{ color: 'var(--beyboru-text)' }} aria-hidden="true" />
             )}
           </Button>
         </div>

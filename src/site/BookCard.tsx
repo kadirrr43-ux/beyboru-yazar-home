@@ -28,11 +28,16 @@ export default function BookCard({ book, index = 0 }: BookCardProps) {
           target="_blank"
           rel="noopener noreferrer"
           className="block"
+          aria-label={`${book.title} - Kitapyurdu'nda satın al`}
         >
           <BookCardContent book={book} isExternal={true} />
         </a>
       ) : (
-        <Link to={internalLink} className="block">
+        <Link 
+          to={internalLink} 
+          className="block"
+          aria-label={`${book.title} - Kitap detaylarını görüntüle`}
+        >
           <BookCardContent book={book} isExternal={false} />
         </Link>
       )}
@@ -68,11 +73,12 @@ function BookCardContent({ book, isExternal }: { book: Book; isExternal: boolean
           <div 
             className="w-14 h-14 rounded-full flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
             style={{ backgroundColor: 'var(--beyboru-gold)' }}
+            aria-hidden="true"
           >
             {isExternal ? (
-              <ExternalLink className="w-6 h-6" style={{ color: 'var(--beyboru-bg)' }} />
+              <ExternalLink className="w-6 h-6" style={{ color: 'var(--beyboru-bg)' }} aria-hidden="true" />
             ) : (
-              <Eye className="w-6 h-6" style={{ color: 'var(--beyboru-bg)' }} />
+              <Eye className="w-6 h-6" style={{ color: 'var(--beyboru-bg)' }} aria-hidden="true" />
             )}
           </div>
         </div>
