@@ -141,12 +141,12 @@ export default function BooksSection() {
           <div 
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
             style={{ 
-              backgroundColor: 'rgba(139, 58, 58, 0.2)',
-              border: '1px solid var(--beyboru-accent)',
+              backgroundColor: 'rgba(212, 175, 55, 0.15)',
+              border: '1px solid var(--beyboru-gold)',
             }}
           >
-            <BookOpen className="w-4 h-4" style={{ color: 'var(--beyboru-accent-light)' }} />
-            <span className="text-sm font-medium" style={{ color: 'var(--beyboru-accent-light)' }}>
+            <BookOpen className="w-4 h-4" style={{ color: 'var(--beyboru-gold)' }} />
+            <span className="text-sm font-medium" style={{ color: 'var(--beyboru-gold)' }}>
               Kitaplarım
             </span>
           </div>

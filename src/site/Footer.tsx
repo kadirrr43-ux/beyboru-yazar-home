@@ -155,9 +155,9 @@ export default function Footer() {
           </p>
           <p 
             className="text-sm flex items-center gap-1"
-            style={{ color: 'var(--beyboru-text-subtle)' }}
+            style={{ color: 'var(--beyboru-text-muted)' }}
           >
-            Made with <Heart className="w-4 h-4 text-red-500" /> in Turkey
+            Made with <Heart className="w-4 h-4 text-red-500" aria-hidden="true" /> in Turkey
           </p>
         </div>
       </div>

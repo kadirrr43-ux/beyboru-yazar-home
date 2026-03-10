@@ -10,7 +10,7 @@ import SEO from '@/components/SEO';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 
-// EmailJS Configuration - Doğrudan sabit değerler
+// EmailJS Configuration - Kullanıcı kendi bilgilerini girmeli
 const EMAILJS_CONFIG = {
   SERVICE_ID: 'service_2ag9iuj', // EmailJS Service ID
   TEMPLATE_ID: 'template_d5cibw9', // EmailJS Template ID
@@ -19,8 +19,8 @@ const EMAILJS_CONFIG = {
 
 // EmailJS kurulu mu kontrol et
 const isEmailJSConfigured = () => {
-  return EMAILJS_CONFIG.SERVICE_ID !== '' && 
-         EMAILJS_CONFIG.TEMPLATE_ID !== '' && 
+  return EMAILJS_CONFIG.SERVICE_ID !== 'service_beyboru' && 
+         EMAILJS_CONFIG.TEMPLATE_ID !== 'template_contact' && 
          EMAILJS_CONFIG.PUBLIC_KEY !== '';
 };
 
@@ -186,6 +186,17 @@ export default function Contact() {
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-6">
+                      {!isEmailJSConfigured() && (
+                        <div 
+                          className="p-4 rounded-lg"
+                          style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)' }}
+                        >
+                          <p style={{ color: '#f59e0b' }}>
+                            ⚠️ Email servisi henüz yapılandırılmamış. Mesaj gönderemezsiniz.
+                          </p>
+                        </div>
+                      )}
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <Label htmlFor="name" style={{ color: 'var(--beyboru-text)' }}>Adınız</Label>
@@ -245,7 +256,7 @@ export default function Contact() {
 
                       <Button
                         type="submit"
-                        disabled={sending}
+                        disabled={sending || !isEmailJSConfigured()}
                         className="w-full beyboru-button"
                         aria-label={sending ? 'Mesaj gönderiliyor' : 'Mesaj gönder'}
                       >

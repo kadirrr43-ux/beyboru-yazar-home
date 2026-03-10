@@ -2,6 +2,19 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Eye, ExternalLink } from 'lucide-react';
 import type { Book } from '@/types';
 
+// Kitapyurdu resimlerini optimize et
+function getOptimizedImageUrl(url: string | undefined, width: number): string {
+  if (!url) return '/placeholder-book.png';
+  
+  // Kitapyurdu URL'lerini optimize et
+  if (url.includes('kitapyurdu.com')) {
+    // wi:800 yerine istenen genişliği kullan
+    return url.replace(/wi:\d+/, `wi:${width}`);
+  }
+  
+  return url;
+}
+
 interface BookCardProps {
   book: Book;
   index?: number;
@@ -56,12 +69,22 @@ function BookCardContent({ book, isExternal }: { book: Book; isExternal: boolean
     >
       {/* Image Container */}
       <div className="relative aspect-[2/3] overflow-hidden">
-        <img
-          src={book.cover_image || '/placeholder-book.png'}
-          alt={book.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-        />
+        <picture>
+          {/* WebP format if available */}
+          <source 
+            srcSet={getOptimizedImageUrl(book.cover_image, 400)} 
+            type="image/webp"
+          />
+          <img
+            src={getOptimizedImageUrl(book.cover_image, 400)}
+            alt={`${book.title} kitap kapağı`}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+            decoding="async"
+            width="400"
+            height="600"
+          />
+        </picture>
         
         {/* Overlay */}
         <div 

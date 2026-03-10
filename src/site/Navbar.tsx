@@ -46,7 +46,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3" aria-label="Ana Sayfa - Beybörü Yazar Evi">
             <div 
               className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
               style={{ backgroundColor: settings?.logo_url ? 'transparent' : 'var(--beyboru-accent)' }}
@@ -54,8 +54,9 @@ export default function Navbar() {
               {settings?.logo_url ? (
                 <img 
                   src={settings.logo_url} 
-                  alt="Logo" 
+                  alt="" 
                   className="w-full h-full object-contain"
+                  aria-hidden="true"
                 />
               ) : (
                 <WolfLogo size={28} className="text-[var(--beyboru-text)]" />
