@@ -1,87 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Ana Sayfa -->
   <url>
     <loc>https://beyborudestanlari.com.tr</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Çeviri Aracı - En Önemli Sayfa -->
+  <url>
+    <loc>https://beyborudestanlari.com.tr/ceviri</loc>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  <!-- Kitaplar -->
   <url>
     <loc>https://beyborudestanlari.com.tr/kitaplar</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  
+  <!-- Kitap Detayları -->
   <url>
     <loc>https://beyborudestanlari.com.tr/kitap/ergenekod</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://beyborudestanlari.com.tr/kitap/kudus</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://beyborudestanlari.com.tr/kitap/zincirlerden-gunese</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://beyborudestanlari.com.tr/kahramanlar</loc>
-    <lastmod>2026-03-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://beyborudestanlari.com.tr/ceviri</loc>
-    <lastmod>2026-03-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://beyborudestanlari.com.tr/hakkimda</loc>
-    <lastmod>2026-03-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://beyborudestanlari.com.tr/iletisim</loc>
-    <lastmod>2026-03-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+  
+  <!-- Beybörü Evreni -->
   <url>
     <loc>https://beyborudestanlari.com.tr/evren</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://beyborudestanlari.com.tr/evren/karakterler</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://beyborudestanlari.com.tr/evren/kavramlar</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://beyborudestanlari.com.tr/evren/lokasyonlar</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://beyborudestanlari.com.tr/evren/zaman-cizelgesi</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
+  </url>
+  
+  <!-- Türk Kahramanları -->
+  <url>
+    <loc>https://beyborudestanlari.com.tr/kahramanlar</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Blog - İçerik Pazarlaması -->
+  <url>
+    <loc>https://beyborudestanlari.com.tr/blog</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://beyborudestanlari.com.tr/blog/osmanlica-nedir</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://beyborudestanlari.com.tr/blog/gokturkce-nedir</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://beyborudestanlari.com.tr/blog/turk-mitolojisi</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://beyborudestanlari.com.tr/blog/turk-tarihi</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://beyborudestanlari.com.tr/blog/eski-turkce</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://beyborudestanlari.com.tr/blog/turkce-ceviri</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  
+  <!-- Hakkımda ve İletişim -->
+  <url>
+    <loc>https://beyborudestanlari.com.tr/hakkimda</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://beyborudestanlari.com.tr/iletisim</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

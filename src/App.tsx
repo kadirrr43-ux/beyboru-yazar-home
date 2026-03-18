@@ -17,6 +17,7 @@ const Heroes = lazy(() => import('@/site/Heroes'));
 const Translator = lazy(() => import('@/site/Translator'));
 const About = lazy(() => import('@/site/About'));
 const Contact = lazy(() => import('@/site/Contact'));
+const Blog = lazy(() => import('@/site/Blog'));
 const Universe = lazy(() => import('@/site/Universe'));
 const UniverseCharacters = lazy(() => import('@/site/UniverseCharacters'));
 const UniverseConcepts = lazy(() => import('@/site/UniverseConcepts'));
@@ -106,6 +107,7 @@ function App() {
         <Route path="/ceviri" element={<SiteLayout><Translator /></SiteLayout>} />
         <Route path="/hakkimda" element={<SiteLayout><About /></SiteLayout>} />
         <Route path="/iletisim" element={<SiteLayout><Contact /></SiteLayout>} />
+        <Route path="/blog" element={<SiteLayout><Blog /></SiteLayout>} />
         
         {/* Universe Routes */}
         <Route path="/evren" element={<SiteLayout><Universe /></SiteLayout>} />

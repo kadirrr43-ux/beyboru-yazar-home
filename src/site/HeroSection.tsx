@@ -121,26 +121,29 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* Title */}
+        {/* Title - SEO Optimized */}
         <h1 
-          className="font-playfair text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up"
+          className="font-playfair text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 animate-slide-up leading-tight"
           style={{ 
             color: 'var(--beyboru-text)',
             textShadow: '0 0 60px var(--beyboru-glow)',
           }}
         >
-          {settings?.hero_title || 'Beybörü Yazar Evi'}
+          <span className="block text-3xl sm:text-4xl lg:text-5xl mb-2" style={{ color: 'var(--beyboru-gold)' }}>
+            Osmanlıca Göktürkçe Çeviri
+          </span>
+          <span className="block">{settings?.hero_title || 'Beybörü Yazar Evi'}</span>
         </h1>
 
         {/* Subtitle */}
         <p 
-          className="text-xl sm:text-2xl mb-10 max-w-2xl mx-auto animate-slide-up"
+          className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto animate-slide-up"
           style={{ 
             color: 'var(--beyboru-text-muted)',
             animationDelay: '0.1s',
           }}
         >
-          {settings?.hero_subtitle || 'Türk edebiyatının yeni sesi. Tarih, mitoloji ve özgün hikayeler.'}
+          {settings?.hero_subtitle || 'Türkçe metinleri Osmanlıca ve Göktürkçe alfabelere ücretsiz çevirin. Tarih, mitoloji ve Türk edebiyatının kesişiminde özgün hikayeler.'}
         </p>
 
         {/* CTA Buttons */}

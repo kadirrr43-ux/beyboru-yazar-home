@@ -10,6 +10,9 @@ export default function Footer() {
     site: [
       { label: 'Ana Sayfa', href: '/' },
       { label: 'Kitaplar', href: '/kitaplar' },
+      { label: 'Kahramanlar', href: '/kahramanlar' },
+      { label: 'Çeviri', href: '/ceviri' },
+      { label: 'Blog', href: '/blog' },
       { label: 'Hakkımda', href: '/hakkimda' },
       { label: 'İletişim', href: '/iletisim' },
     ],

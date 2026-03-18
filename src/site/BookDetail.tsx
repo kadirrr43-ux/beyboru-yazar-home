@@ -143,9 +143,9 @@ export default function BookDetail() {
   return (
     <>
       <SEO
-        title={`${book.title}${book.subtitle ? ` - ${book.subtitle}` : ''} | Beybörü`}
-        description={book.seo_description || book.description}
-        keywords={book.seo_keywords?.join(', ') || book.tags?.join(', ')}
+        title={`${book.title}${book.subtitle ? ` - ${book.subtitle}` : ''} | Türk Edebiyatı Romanı`}
+        description={`${book.seo_description || book.description} ${book.category?.includes('tarih') ? 'Tarihi roman, Türk mitolojisi.' : ''} ${book.category?.includes('edebiyat') ? 'Türk edebiyatı, çağdaş roman.' : ''} Beybörü Yazar Evi.`}
+        keywords={`${book.title}, ${book.seo_keywords?.join(', ') || book.tags?.join(', ')}, Türk edebiyatı, roman, kitap, ${book.category?.join(', ') || ''}, Beybörü`}
         image={book.cover_image}
         url={`https://beyborudestanlari.com.tr/kitap/${book.slug}`}
         type="book"

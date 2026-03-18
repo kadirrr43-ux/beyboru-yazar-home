@@ -103,10 +103,11 @@ export default function Translator() {
   return (
     <>
       <SEO
-        title="Osmanlıca Göktürkçe Çeviri | Ücretsiz Online Çeviri Aracı"
-        description="Türkçe metinleri Osmanlıca ve Göktürkçe'ye ücretsiz çevirin. Sesli okuma, sayı çevirisi ve geçmiş kaydı özellikleriyle kadim dilleri keşfedin."
-        keywords="Osmanlıca çeviri, Göktürkçe çeviri, Türkçe Osmanlıca, online çeviri, kadim Türkçe"
+        title="Osmanlıca Göktürkçe Çeviri | Ücretsiz Online Çeviri Aracı - Beybörü"
+        description="Türkçe metinleri Osmanlıca ve Göktürkçe'ye ücretsiz çevirin. Sesli okuma, sayı çevirisi ve geçmiş kaydı özellikleriyle kadim Türk dillerini keşfedin. Eski Türkçe yazı çevirisi."
+        keywords="Osmanlıca çeviri, Göktürkçe çeviri, Türkçe Osmanlıca çeviri, Türkçe Göktürkçe çeviri, Osmanlıca yazı, Göktürkçe yazı, eski Türkçe çeviri, kadim Türkçe, online çeviri aracı, ücretsiz çeviri, Osmanlı alfabesi, Göktürk alfabesi"
         url="https://beyborudestanlari.com.tr/ceviri"
+        type="website"
       />
     <div className="min-h-screen" style={{ backgroundColor: 'var(--beyboru-bg)' }}>
       {/* Hero */}
