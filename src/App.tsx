@@ -13,11 +13,20 @@ import Footer from '@/site/Footer';
 
 // Site Components - Lazy loaded
 const BookDetail = lazy(() => import('@/site/BookDetail'));
+const BookPreview = lazy(() => import('@/site/BookPreview'));
 const Heroes = lazy(() => import('@/site/Heroes'));
+const CharacterWiki = lazy(() => import('@/site/CharacterWiki'));
 const Translator = lazy(() => import('@/site/Translator'));
 const About = lazy(() => import('@/site/About'));
 const Contact = lazy(() => import('@/site/Contact'));
 const Blog = lazy(() => import('@/site/Blog'));
+const BlogPost = lazy(() => import('@/site/BlogPost'));
+const FAQ = lazy(() => import('@/site/FAQ'));
+const NameTranslator = lazy(() => import('@/site/NameTranslator'));
+const Games = lazy(() => import('@/site/Games'));
+const Mangala = lazy(() => import('@/site/games/Mangala'));
+const NineStones = lazy(() => import('@/site/games/NineStones'));
+const BeyboruMahjong = lazy(() => import('@/site/games/BeyboruMahjong'));
 const Universe = lazy(() => import('@/site/Universe'));
 const UniverseCharacters = lazy(() => import('@/site/UniverseCharacters'));
 const UniverseConcepts = lazy(() => import('@/site/UniverseConcepts'));
@@ -103,11 +112,22 @@ function App() {
         <Route path="/" element={<SiteLayout><HomePage /></SiteLayout>} />
         <Route path="/kitaplar" element={<SiteLayout><BooksPage /></SiteLayout>} />
         <Route path="/kitap/:slug" element={<SiteLayout><BookDetail /></SiteLayout>} />
+        <Route path="/kitap/:slug/on-okuma" element={<SiteLayout><BookPreview /></SiteLayout>} />
         <Route path="/kahramanlar" element={<SiteLayout><Heroes /></SiteLayout>} />
+        <Route path="/karakter/:slug" element={<SiteLayout><CharacterWiki /></SiteLayout>} />
         <Route path="/ceviri" element={<SiteLayout><Translator /></SiteLayout>} />
+        <Route path="/isim-cevirici" element={<SiteLayout><NameTranslator /></SiteLayout>} />
         <Route path="/hakkimda" element={<SiteLayout><About /></SiteLayout>} />
         <Route path="/iletisim" element={<SiteLayout><Contact /></SiteLayout>} />
         <Route path="/blog" element={<SiteLayout><Blog /></SiteLayout>} />
+        <Route path="/blog/:id" element={<SiteLayout><BlogPost /></SiteLayout>} />
+        <Route path="/sss" element={<SiteLayout><FAQ /></SiteLayout>} />
+        
+        {/* Games Routes */}
+        <Route path="/oyunlar" element={<SiteLayout><Games /></SiteLayout>} />
+        <Route path="/oyunlar/mangala" element={<SiteLayout><Mangala /></SiteLayout>} />
+        <Route path="/oyunlar/9-tas" element={<SiteLayout><NineStones /></SiteLayout>} />
+        <Route path="/oyunlar/mahjong" element={<SiteLayout><BeyboruMahjong /></SiteLayout>} />
         
         {/* Universe Routes */}
         <Route path="/evren" element={<SiteLayout><Universe /></SiteLayout>} />

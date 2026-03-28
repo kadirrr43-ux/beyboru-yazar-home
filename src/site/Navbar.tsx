@@ -10,7 +10,10 @@ const navLinks = [
   { path: '/kitaplar', label: 'Kitaplar' },
   { path: '/kahramanlar', label: 'Kahramanlar' },
   { path: '/ceviri', label: 'Çeviri' },
+  { path: '/isim-cevirici', label: 'İsim Çevirici' },
+  { path: '/oyunlar', label: 'Oyunlar' },
   { path: '/blog', label: 'Blog' },
+  { path: '/sss', label: 'SSS' },
   { path: '/hakkimda', label: 'Hakkımda' },
   { path: '/iletisim', label: 'İletişim' },
 ];
