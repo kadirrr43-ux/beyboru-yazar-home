@@ -46,28 +46,28 @@ const faqData: FAQItem[] = [
   {
     category: 'Kitaplar',
     question: 'Kitaplarınızın e-kitap versiyonları var mı?',
-    answer: 'Şuan için malesef bulunmuyor.'
+    answer: 'Evet, Beybörü kitaplarının e-kitap versiyonları mevcuttur. Kindle, Google Play Books ve diğer e-kitap platformlarından satın alabilirsiniz. Dijital versiyonlar tüm e-okuyucu cihazlarla uyumludur.'
   },
   {
     category: 'Kitaplar',
     question: 'Toplu sipariş ve indirim imkanları var mı?',
-    answer: 'Malesef hayır KDY'deki indirimleri takip edebilirsiniz.'
+    answer: 'Evet, kütüphaneler, okullar ve kurumlar için toplu siparişlerde özel indirimler sunuyoruz. Detaylı bilgi için iletişim sayfamızdan bize ulaşabilirsiniz.'
   },
   // Çeviri Hizmetleri
   {
     category: 'Çeviri Hizmetleri',
     question: 'Hangi dillerde çeviri hizmeti sunuyorsunuz?',
-    answer: 'Beybörü Yazar Evi olarak Osmanlıca, Göktürkçe ve modern Türkçe arasında çeviri hizmetleri sunuyoruz.'
+    answer: 'Beybörü Yazar Evi olarak Osmanlıca, Göktürkçe ve modern Türkçe arasında çeviri hizmetleri sunuyoruz. Ayrıca edebî metin çevirileri ve akademik çeviriler de yapmaktayız.'
   },
   {
     category: 'Çeviri Hizmetleri',
     question: 'Çeviri ücretleri nasıl belirleniyor?',
-    answer: 'Çevirilerinizi internet sitemizden tamamen ücretsiz olarak yapabilirsiniz.'
+    answer: 'Çeviri ücretleri metnin uzunluğuna, karmaşıklığına ve teslim süresine göre belirlenir. Basit metinler için kelime başına, karmaşık tarihi belgeler için saatlik ücretlendirme yapıyoruz. Ücretsiz fiyat teklifi almak için iletişime geçebilirsiniz.'
   },
   {
     category: 'Çeviri Hizmetleri',
     question: 'Tarihi belge çevirisi yapıyor musunuz?',
-    answer: 'Çevirilerinizi internet sitemizden tamamen ücretsiz olarak yapabilirsiniz. Sorumluluk tamamen çeviriyi yaptırana aittir.'
+    answer: 'Evet, vakıf kayıtları, tapu belgeleri, aile arşivleri, mektuplar ve diğer tarihi belgelerin çevirisini yapıyoruz. Tarihi belgeler özel uzmanlık gerektirdiği için titizlikle çalışıyor ve belgenin bağlamını koruyoruz.'
   },
   // Beybörü Evreni
   {
@@ -83,13 +83,13 @@ const faqData: FAQItem[] = [
   {
     category: 'Beybörü Evreni',
     question: 'Yeni kitaplar ne zaman çıkacak?',
-    answer: 'Yeni kitaplarımız hakkında güncel bilgileri web sitemizden, sosyal medya hesaplarımızdan ve bültenimize abone olarak takip edebilirsiniz.'
+    answer: 'Yeni kitaplarımız hakkında güncel bilgileri web sitemizden, sosyal medya hesaplarımızdan ve bültenimize abone olarak takip edebilirsiniz. Yakında çıkacak kitaplarımız için ön sipariş imkanı da sunuyoruz.'
   },
   // Genel
   {
     category: 'Genel',
     question: 'Yazarla nasıl iletişime geçebilirim?',
-    answer: 'Yazarla iletişime geçmek için web sitemizdeki İletişim sayfasını kullanabilirsiniz. Ayrıca sosyal medya hesaplarımızdan da bize ulaşabilirsiniz. Tüm mesajları dikkatle okuyor ve mümkün olan en kısa sürede yanıtlıyoruz. '
+    answer: 'Yazarla iletişime geçmek için web sitemizdeki İletişim sayfasını kullanabilirsiniz. Ayrıca sosyal medya hesaplarımızdan da bize ulaşabilirsiniz. Tüm mesajları dikkatle okuyor ve mümkün olan en kısa sürede yanıtlıyoruz.'
   },
   {
     category: 'Genel',

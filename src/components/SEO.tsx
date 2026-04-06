@@ -24,8 +24,8 @@ const defaultSEO = {
   title: 'Beybörü Yazar Evi | Türkçe-Osmanlıca-Göktürkçe Çeviri ve Edebiyat',
   description: 'Türkçe metinleri Osmanlıca ve Göktürkçe\'ye çeviren özgün platform. Tarih, mitoloji ve modern edebiyatın kesişiminde hikayeler.',
   keywords: 'Osmanlıca çeviri, Göktürkçe çeviri, Türk edebiyatı, tarihi roman, mitolojik hikayeler',
-  image: 'https://beyborudestanlari.com.tr/og-image.jpg',
-  url: 'https://beyborudestanlari.com.tr',
+  image: 'https://www.beyborudestanlari.com.tr/og-image.jpg',
+  url: 'https://www.beyborudestanlari.com.tr',
   author: 'Beybörü',
 };
 
@@ -91,7 +91,7 @@ export default function SEO({
           name: 'Beybörü Yazar Evi',
           logo: {
             '@type': 'ImageObject',
-            url: 'https://beyborudestanlari.com.tr/logo.png',
+            url: 'https://www.beyborudestanlari.com.tr/logo.png',
           },
         },
         url: url,

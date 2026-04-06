@@ -1,20 +1,12 @@
 User-agent: *
 Allow: /
+
+# Sitemap
+Sitemap: https://www.beyborudestanlari.com.tr/sitemap.xml
+
+# Disallow admin pages
 Disallow: /admin/
 Disallow: /admin/*
 
-# Sitemap
-Sitemap: https://beyborudestanlari.com.tr/sitemap.xml
-
-# Crawl-delay
-Crawl-delay: 10
-
-# Googlebot
-User-agent: Googlebot
-Allow: /
-Disallow: /admin/
-
-# Bingbot
-User-agent: Bingbot
-Allow: /
-Disallow: /admin/
+# Crawl-delay for bots
+Crawl-delay: 1
